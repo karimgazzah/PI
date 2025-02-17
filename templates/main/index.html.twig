@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sign Up as a Lawyer{% endblock %}
+
+{% block body %}
+<section class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-6">
+      <h2 class="mb-4 text-center">Sign Up as a Lawyer</h2>
+
+      {{ form_start(form, {'attr': {'class': 'p-4 border rounded bg-light'}}) }}
+
+        <div class="mb-3">
+          {{ form_label(form.email, 'Email', {'attr': {'class': 'form-label'}}) }}
+          {{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder': 'Enter your email'}}) }}
+          {{ form_errors(form.email) }}
+        </div>
+
+        <div class="mb-3">
+          {{ form_label(form.password, 'Password', {'attr': {'class': 'form-label'}}) }}
+          {{ form_widget(form.password, {'attr': {'class': 'form-control', 'placeholder': 'Enter password'}}) }}
+          {{ form_errors(form.password) }}
+        </div>
+
+        <div class="mb-3">
+          {{ form_label(form.retypepassword, 'Re-Type Password', {'attr': {'class': 'form-label'}}) }}
+          {{ form_widget(form.retypepassword, {'attr': {'class': 'form-control', 'placeholder': 'Re-type password'}}) }}
+          {{ form_errors(form.retypepassword) }}
+        </div>
+
+        <div class="mb-3">
+          {{ form_label(form.code, 'Lawyer Code', {'attr': {'class': 'form-label'}}) }}
+          {{ form_widget(form.code, {'attr': {'class': 'form-control', 'placeholder': 'Enter lawyer code'}}) }}
+          {{ form_errors(form.code) }}
+        </div>
+
+        <div class="mb-3">
+          {{ form_label(form.location, 'Office Location', {'attr': {'class': 'form-label'}}) }}
+          {{ form_widget(form.location, {'attr': {'class': 'form-control', 'placeholder': 'Enter office location'}}) }}
+          {{ form_errors(form.location) }}
+        </div>
+
+        <div class="mb-3">
+          {{ form_label(form.number, 'Phone Number', {'attr': {'class': 'form-label'}}) }}
+          {{ form_widget(form.number, {'attr': {'class': 'form-control', 'placeholder': 'Enter phone number', 'pattern': '[0-9]*', 'inputmode': 'numeric'}}) }}
+          {{ form_errors(form.number) }}
+        </div>
+
+        <div class="d-grid">
+          <button type="submit" class="btn btn-primary">Sign Up</button>
+        </div>
+
+      {{ form_end(form) }}
+    </div>
+  </div>
+</section>
+{% endblock %}
