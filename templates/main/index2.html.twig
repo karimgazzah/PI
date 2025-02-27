@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Sign Up as a Lawyer{% endblock %}
+{% block title %}Sign Up as a Client{% endblock %}
 
 {% block body %}
 <section class="container py-5">
   <div class="row justify-content-center">
     <div class="col-lg-6">
-      <h2 class="mb-4 text-center">Sign Up as a Lawyer</h2>
+      <h2 class="mb-4 text-center">Sign Up as a Client</h2>
 
       {# Flash messages for errors and success #}
       {% for message in app.flashes('error') %}
@@ -22,6 +22,8 @@
       {% endfor %}
 
       {{ form_start(form, {'attr': {'class': 'p-4 border rounded bg-light'}}) }}
+
+        {# Removed the ID field since it's auto-generated #}
 
         <div class="mb-3">
           {{ form_label(form.email, 'Email', {'attr': {'class': 'form-label'}}) }}
@@ -42,15 +44,15 @@
         </div>
 
         <div class="mb-3">
-          {{ form_label(form.code, 'Lawyer Code', {'attr': {'class': 'form-label'}}) }}
-          {{ form_widget(form.code, {'attr': {'class': 'form-control', 'placeholder': 'Enter lawyer code'}}) }}
-          {{ form_errors(form.code) }}
+          {{ form_label(form.casesNumber, 'Cases Number', {'attr': {'class': 'form-label'}}) }}
+          {{ form_widget(form.casesNumber, {'attr': {'class': 'form-control', 'placeholder': 'Enter number of cases'}}) }}
+          {{ form_errors(form.casesNumber) }}
         </div>
 
         <div class="mb-3">
-          {{ form_label(form.location, 'Office Location', {'attr': {'class': 'form-label'}}) }}
-          {{ form_widget(form.location, {'attr': {'class': 'form-control', 'placeholder': 'Enter office location'}}) }}
-          {{ form_errors(form.location) }}
+          {{ form_label(form.moreInformation, 'More Information', {'attr': {'class': 'form-label'}}) }}
+          {{ form_widget(form.moreInformation, {'attr': {'class': 'form-control', 'placeholder': 'Enter any additional information'}}) }}
+          {{ form_errors(form.moreInformation) }}
         </div>
 
         <div class="mb-3">

@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Client List{% endblock %}
+
+{% block body %}
+  {% for message in app.flashes('message') %}
+    <div class="alert alert-success">{{ message }}</div>
+  {% endfor %}
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Email</th>
+        <th scope="col">Password</th>
+        <th scope="col">More Information</th>
+        <th scope="col">Phone Number</th>
+        <th scope="col">Cases Number</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for client in clients %}
+        <tr>
+          <td>{{ client.email }}</td>
+<td>{{ client.password }}</td>
+<td>{{ client.moreInformation }}</td> {# Corrected #}
+<td>{{ client.number }}</td>
+<td>{{ client.casesNumber }}</td>
+
+            <a href="{{ path('edit_client', {id: client.client_id}) }}" class="btn btn-success">Edit</a>
+            <a href="{{ path('delete_client', {id: client.client_id}) }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this client?');">Delete</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

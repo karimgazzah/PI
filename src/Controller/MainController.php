@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Client;
+use App\Form\ClientType;
 use App\Entity\Lawyer;
 use App\Form\LawyerType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -12,6 +14,16 @@ use Symfony\Component\Routing\Annotation\Route;
 
 final class MainController extends AbstractController
 {
+    #[Route('/admin2', name: 'admin2')]
+    public function admin2(): Response
+    {
+        $clients = $this->em->getRepository(Client::class)->findAll();
+
+        return $this->render('main/admin2.html.twig', [
+            'clients' => $clients,
+        ]);
+    }
+
     private $em;
 
     public function __construct(EntityManagerInterface $em)
@@ -25,7 +37,7 @@ final class MainController extends AbstractController
         $lawyers = $this->em->getRepository(Lawyer::class)->findAll();
 
         return $this->render('main/admin.html.twig', [
-            'lawyers' => $lawyers, // Fixed typo from 'laywers' to 'lawyers'
+            'lawyers' => $lawyers,
         ]);
     }
 
@@ -35,21 +47,57 @@ final class MainController extends AbstractController
         $lawyer = new Lawyer();
         $form = $this->createForm(LawyerType::class, $lawyer);
         $form->handleRequest($request);
-
+    
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->em->persist($lawyer);
-            $this->em->flush();
-
-            $this->addFlash('message', 'Inserted successfully');
-            return $this->redirectToRoute('app_main');
-        }
-
+            $password = $form->get('password')->getData();
+            $retypePassword = $form->get('retypepassword')->getData();
+    
+            if ($password !== $retypePassword) {
+                $this->addFlash('error', 'Passwords do not match!');
+            } else {
+                $lawyer->setPassword(password_hash($password, PASSWORD_BCRYPT));
+                
+                $this->em->persist($lawyer);
+                $this->em->flush();
+                
+                $this->addFlash('message', 'Inserted successfully');
+                return $this->redirectToRoute('login_page');
+            }
+        }       
+    
         return $this->render('main/index.html.twig', [
             'form' => $form->createView(),
         ]);
     }
+    
+    #[Route('/signup_client', name: 'signup_client')]
+    public function client(Request $request)
+    {
+        $client = new Client();
+        $form = $this->createForm(ClientType::class, $client);
+        $form->handleRequest($request);
 
-    // New route for editing a lawyer
+        if ($form->isSubmitted() && $form->isValid()) {
+            $password = $form->get('password')->getData();
+            $retypePassword = $form->get('retypepassword')->getData();
+
+            if ($password !== $retypePassword) {
+                $this->addFlash('error', 'Passwords do not match!');
+            } else {
+                $client->setPassword(password_hash($password, PASSWORD_BCRYPT));
+                $this->em->persist($client);
+                $this->em->flush();
+
+                $this->addFlash('message', 'Inserted successfully');
+                return $this->redirectToRoute('login_page');
+            }
+        }
+
+        return $this->render('main/index2.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
     #[Route('/edit_lawyer/{id}', name: 'edit_lawyer')]
     public function editLawyer(Request $request, int $id): Response
     {
@@ -71,10 +119,10 @@ final class MainController extends AbstractController
 
         return $this->render('main/edit_lawyer.html.twig', [
             'form' => $form->createView(),
+            'lawyers' => $this->em->getRepository(Lawyer::class)->findAll(),
         ]);
     }
 
-    // New route for deleting a lawyer
     #[Route('/delete_lawyer/{id}', name: 'delete_lawyer')]
     public function deleteLawyer(int $id): Response
     {
@@ -83,12 +131,17 @@ final class MainController extends AbstractController
         if ($lawyer) {
             $this->em->remove($lawyer);
             $this->em->flush();
-
             $this->addFlash('message', 'Lawyer deleted successfully!');
         } else {
             $this->addFlash('message', 'Lawyer not found.');
         }
 
         return $this->redirectToRoute('app_main');
+    }
+
+    #[Route('/login', name: 'login_page')]
+    public function login(): Response
+    {
+        return $this->render('main/login.html.twig');
     }
 }

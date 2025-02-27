@@ -20,16 +20,19 @@ class Client
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $retypepassword = null;
+    private ?string $retypepassword = null; // Add this line
 
     #[ORM\Column(length: 255)]
-    private ?string $cases = null;
+    private ?string $moreInformation = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $location = null;
+    #[ORM\Column]
+    private ?int $number = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $informations = null;
+    #[ORM\Column(nullable: true)]
+    private ?int $casesNumber = null;
+    
+
+    // Getters and setters for all properties
 
     public function getId(): ?int
     {
@@ -44,7 +47,6 @@ class Client
     public function setEmail(string $email): static
     {
         $this->email = $email;
-
         return $this;
     }
 
@@ -56,7 +58,6 @@ class Client
     public function setPassword(string $password): static
     {
         $this->password = $password;
-
         return $this;
     }
 
@@ -68,43 +69,43 @@ class Client
     public function setRetypepassword(string $retypepassword): static
     {
         $this->retypepassword = $retypepassword;
-
         return $this;
     }
 
-    public function getCases(): ?string
+    public function getMoreInformation(): ?string
     {
-        return $this->cases;
+        return $this->moreInformation;
     }
 
-    public function setCases(string $cases): static
+    public function setMoreInformation(string $moreInformation): static
     {
-        $this->cases = $cases;
-
+        $this->moreInformation = $moreInformation;
         return $this;
     }
 
-    public function getLocation(): ?string
+    public function getNumber(): ?int
     {
-        return $this->location;
+        return $this->number;
     }
 
-    public function setLocation(string $location): static
+    public function setNumber(int $number): static
     {
-        $this->location = $location;
-
+        $this->number = $number;
         return $this;
     }
 
-    public function getInformations(): ?string
+    public function getCasesNumber(): ?int
     {
-        return $this->informations;
+        return $this->casesNumber;
     }
 
-    public function setInformations(?string $informations): static
+    public function setCasesNumber(int $casesNumber): static
     {
-        $this->informations = $informations;
-
+        $this->casesNumber = $casesNumber;
         return $this;
     }
+    // src/Entity/Client.php
+
+ 
+
 }

@@ -34,4 +34,3 @@ class LawyerType extends AbstractType
         ]);
     }
 }
-

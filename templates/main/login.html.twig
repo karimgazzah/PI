@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home - Login{% endblock %}
+
+{% block body %}
+<section class="container py-5">
+  <div class="row">
+    <!-- Lawyer Login Form -->
+    <div class="col-md-6 mb-4">
+      <h2 class="mb-4 text-center">Log In as Lawyer</h2>
+      <form action="{{ path('login_lawyer') }}" method="post" class="p-4 border rounded bg-light">
+        <div class="mb-3">
+          <label for="lawyer_email" class="form-label">Email</label>
+          <input type="email" id="lawyer_email" name="email" class="form-control" placeholder="Enter your email" required>
+        </div>
+        <div class="mb-3">
+          <label for="lawyer_password" class="form-label">Password</label>
+          <input type="password" id="lawyer_password" name="password" class="form-control" placeholder="Enter your password" required>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Log In as Lawyer</button>
+      </form>
+    </div>
+
+    <!-- Client Login Form -->
+    <div class="col-md-6 mb-4">
+      <h2 class="mb-4 text-center">Log In as Client</h2>
+      <form action="{{ path('login_client') }}" method="post" class="p-4 border rounded bg-light">
+        <div class="mb-3">
+          <label for="client_email" class="form-label">Email</label>
+          <input type="email" id="client_email" name="email" class="form-control" placeholder="Enter your email" required>
+        </div>
+        <div class="mb-3">
+          <label for="client_password" class="form-label">Password</label>
+          <input type="password" id="client_password" name="password" class="form-control" placeholder="Enter your password" required>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Log In as Client</button>
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}
